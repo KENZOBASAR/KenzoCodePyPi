@@ -1,0 +1,40 @@
+name: Python Package Workflow
+
+on:
+  push:
+    branches:
+      - main  # Trigger workflow on push to the main branch
+  pull_request:
+    branches:
+      - main  # Trigger workflow on pull request to the main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Use the latest Ubuntu runner
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2  # Checkout the repository code
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'  # Set the desired Python version
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip  # Upgrade pip
+        pip install -r requirements.txt  # Install the dependencies from requirements.txt
+
+    - name: Install tkinterweb
+      run: |
+        pip install tkinterweb  # Install tkinterweb for the project
+
+    - name: Run KenzoCode application
+      run: |
+        python kenzocode.pyw  # Run the main application (kenzocode.pyw)
+
+    - name: Test Application
+      run: |
+        # Here you can run tests if applicable (optional)
+        python -m unittest discover tests/  # Example if you have test cases in 'tests/' folder
